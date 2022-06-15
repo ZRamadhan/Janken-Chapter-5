@@ -1,9 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:context=".game.GameActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+tools:context=".game.GameActivity">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+  
+  <LinearLayout
+      android:id="@+id/linearLayout"
+      android:layout_width="match_parent"
+      android:layout_height="250dp"
+      android:gravity="center_horizontal|center_vertical"
+      android:orientation="vertical"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="right"
+        android:layout_marginBottom="-30dp"
+        android:layout_marginRight="25dp">
+      
+      <ImageView
+          android:id="@+id/btnExit"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:src="@drawable/ic_baseline_exit_to_app_24" />
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/kertas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kertas"
+        style="@style/TextKertas"/>
+    
+    <TextView
+        android:id="@+id/gunting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gunting"
+        style="@style/TextGunting"/>
+    
+    <TextView
+        android:id="@+id/batu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Batu"
+        style="@style/TextBatu"/>
+  </LinearLayout>
+  
+  
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="480dp"
+      app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+  
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+  
+      <TextView
+          android:id="@+id/textView2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Pemain"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          style="@style/HomeText"/>
+  
+      <ImageView
+          android:id="@+id/pemainSatu"
+          style="@style/IconSize"
+          android:src="@drawable/ic_gunting"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/textView2" />
+  
+      <ImageView
+          android:id="@+id/pemainDua"
+          style="@style/IconSize"
+          android:src="@drawable/ic_batu"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/pemainSatu" />
+  
+      <ImageView
+          android:id="@+id/pemainTiga"
+          style="@style/IconSize"
+          android:src="@drawable/ic_kertas"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/pemainDua" />
+    </LinearLayout>
+  
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_marginRight="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+  
+      <TextView
+          android:id="@+id/textView3"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Computer"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          style="@style/HomeText"/>
+  
+      <ImageView
+          android:id="@+id/comSatu"
+          style="@style/IconSize"
+          android:src="@drawable/ic_kertas"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/textView3" />
+  
+      <ImageView
+          android:id="@+id/comDua"
+          style="@style/IconSize"
+          android:src="@drawable/ic_gunting"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/comSatu" />
+  
+      <ImageView
+          android:id="@+id/comTiga"
+          style="@style/IconSize"
+          android:src="@drawable/ic_batu"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/comDua" />
+
+    </LinearLayout>
+  
+    <TextView
+        android:id="@+id/textVersus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VS"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout2"
+        style="@style/HomeText"/>
+    
+    <ImageView
+        android:id="@+id/btnReset"
+        android:layout_marginBottom="25dp"
+        android:layout_marginRight="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_refresh"
+        style="@style/IconSize"/>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

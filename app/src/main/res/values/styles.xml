@@ -6,6 +6,7 @@
     <item name="fontFamily">@font/dhf_semangat_2012_bold</item>
     <item name="android:textSize">42sp</item>
     <item name="android:rotation">-10</item>
+    <item name="android:gravity">center_horizontal|center_vertical</item>
   </style>
 
   <style name="TextKertas" parent="Theme.Janken">
@@ -14,6 +15,7 @@
     <item name="fontFamily">@font/dhf_semangat_2012_bold</item>
     <item name="android:textSize">42sp</item>
     <item name="android:rotation">-10</item>
+    <item name="android:gravity">center_horizontal|center_vertical</item>
   </style>
 
   <style name="TextGunting" parent="Theme.Janken">
@@ -22,6 +24,7 @@
     <item name="fontFamily">@font/dhf_semangat_2012_bold</item>
     <item name="android:textSize">42sp</item>
     <item name="android:rotation">-10</item>
+    <item name="android:gravity">center_horizontal|center_vertical</item>
   </style>
 
   <style name="OnboardingText" parent="Theme.Janken">
@@ -37,5 +40,11 @@
     <item name="fontFamily">@font/dhf_semangat_2012_bold</item>
     <item name="android:textSize">32sp</item>
     <item name="android:gravity">center</item>
+  </style>
+  
+  <style name="IconSize" parent="Theme.Janken">
+    <item name="android:layout_width">80dp</item>
+    <item name="android:layout_height">80dp</item>
+    <item name="android:layout_marginTop">15dp</item>
   </style>
 </resources>
