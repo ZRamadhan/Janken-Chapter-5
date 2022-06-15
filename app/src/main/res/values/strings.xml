@@ -1,0 +1,5 @@
+<resources>
+  <string name="app_name">Janken</string>
+  <string name="on_boarding_one">Bermain suit melawan sesama pemain</string>
+  <string name="on_boarding_second">Bermain suit melawan komputer</string>
+</resources>

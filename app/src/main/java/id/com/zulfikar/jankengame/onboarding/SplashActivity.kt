@@ -1,0 +1,23 @@
+package id.com.zulfikar.jankengame.onboarding
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import id.com.zulfikar.jankengame.MainActivity
+import id.com.zulfikar.jankengame.R
+
+class SplashActivity : AppCompatActivity() {
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_splash)
+  
+    Handler(Looper.getMainLooper()).postDelayed( {
+      val intentRadio = Intent(this@SplashActivity, MainActivity::class.java)
+    
+      startActivity(intentRadio)
+    
+    }, 1000)
+  }
+}
