@@ -3,4 +3,8 @@
   <string name="on_boarding_one">Bermain suit melawan sesama pemain</string>
   <string name="on_boarding_second">Bermain suit melawan komputer</string>
   <string name="on_boarding_third">Tuliskan nama mu dibawah</string>
+  <string name="home_header">Pilih Lawan Mu</string>
+  <string name="name">Nama</string>
+  <string name="oponent_cpu">VS CPU</string>
+  <string name="oponent_player">VS Player</string>
 </resources>

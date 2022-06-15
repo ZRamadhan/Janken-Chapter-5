@@ -1,7 +1,9 @@
 package id.com.zulfikar.jankengame
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -13,7 +15,7 @@ import id.com.zulfikar.jankengame.onboarding.OnBoardingSecondImageFragment
 import id.com.zulfikar.jankengame.onboarding.OnBoardingThirdImageFragment
 
 // step 3 kirim data dari fragment ke activity -> implement data di activity
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnBoardingThirdImageFragment.UsernameInputListener {
   
   lateinit var viewPager: ViewPager
   lateinit var dotIndicator: DotsIndicator
@@ -32,13 +34,35 @@ class MainActivity : AppCompatActivity() {
     viewPager.adapter = SimpleViewPagerAdapter(supportFragmentManager)
     dotIndicator.attachTo(viewPager)
     
-    viewPager.addOnAdapterChangeListener(object : ViewPager.OnPageChangeListener{
-      override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+    btnNext.setOnClickListener{
+      val currentIndex = viewPager.currentItem
+      viewPager.currentItem = currentIndex+1
       
+      if (currentIndex == 2) {
+        val navigateToHome = Intent(this@MainActivity, HomeActivity::class.java)
+        navigateToHome.putExtra("USER_NAME", namaUser)
+        startActivity(navigateToHome)
       }
   
+      if(currentIndex == 0) {
+        // step 6 kirim data dari activity ke fragment, panggil method dan kirim data sesuai yg dibutuhkan
+        listener?.onDataSend("data from activity")
+      }
+    }
+  
+    // disable button next saat berada di fragment pertama, terakhir, dan saat tidak ada nama
+    viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+      override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+      }
+
       override fun onPageSelected(position: Int) {
-        if (position == 1 || position == 0 || namaUser.isNotEmpty())
+        if (position == 1 || position == 0 || namaUser.isNotEmpty()) btnNext.visibility = View.VISIBLE
+        else btnNext.visibility = View.GONE
+      }
+
+      override fun onPageScrollStateChanged(state: Int) {
+
       }
     })
   }
@@ -54,11 +78,17 @@ class MainActivity : AppCompatActivity() {
   
   }
   
-  // step 1 kirim data dari activity ke fragment, bikin interface di activity
+  // step 4 kirim dara dari activity ke fragment -> override method interfacenya
+  override fun afterUserInputName(input: String) {
+    if(input.isNotEmpty()) btnNext.visibility = View.VISIBLE else btnNext.visibility = View.GONE
+    namaUser = input
+  }
+  
+  // step 1 kirim data dari activity ke fragment -> bikin interface di activity
   interface OnSendDataToFragment {
     fun onDataSend(input: String)
   }
   
-  // step 2 data dari activity ke fragment. bikin variable di activity
+  // step 2 data dari activity ke fragment -> bikin variable di activity
   var listener: OnSendDataToFragment? = null
 }
