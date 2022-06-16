@@ -34,11 +34,15 @@ class HomeActivity : AppCompatActivity() {
     txtUserNameVsPemain.text = namaUser
     
     btnVsCpu.setOnClickListener{
-      startActivity(Intent(this, GameActivity::class.java))
+      val navigateToGame = Intent(this@HomeActivity, GameActivity::class.java)
+      navigateToGame.putExtra("MODE", 1)
+      startActivity(navigateToGame)
     }
     
     btnVsPemain.setOnClickListener{
-      startActivity(Intent(this, GameActivity::class.java))
+      val navigateToGame = Intent(this@HomeActivity, GameActivity::class.java)
+      navigateToGame.putExtra("MODE", 2)
+      startActivity(navigateToGame)
     }
   }
 }

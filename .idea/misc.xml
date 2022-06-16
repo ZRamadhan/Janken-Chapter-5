@@ -4,12 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/ic_batu.xml" value="0.2085" />
+        <entry key="app/src/main/res/drawable/ic_hand_background.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/ic_landing_page1.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/ic_landing_page2.xml" value="0.2085" />
         <entry key="app/src/main/res/layout/activity_game.xml" value="0.20252302971439085" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.1724816363790761" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16893115942028986" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.2991890948751698" />
+        <entry key="app/src/main/res/layout/dialog_winner.xml" value="0.1598731884057971" />
         <entry key="app/src/main/res/layout/fragment_on_board_first_image.xml" value="0.15489130434782608" />
         <entry key="app/src/main/res/layout/fragment_on_boarding_second_image.xml" value="0.15489130434782608" />
         <entry key="app/src/main/res/layout/fragment_on_boarding_third_image.xml" value="0.15489130434782608" />
