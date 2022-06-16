@@ -1,18 +1,24 @@
 package id.com.zulfikar.jankengame.game
 
-import android.graphics.Color
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import id.com.zulfikar.jankengame.R
 
 class GameActivity : AppCompatActivity() {
   
+  var idPemainSatu: Int = 0
+  var idPemainDua: Int = 0
+  
   lateinit var btnExit: ImageView
   lateinit var btnReset: ImageView
   lateinit var userName : TextView
+  lateinit var lawanName : TextView
   
   lateinit var btnPemainGunting: ImageView
   lateinit var btnPemainBatu: ImageView
@@ -22,9 +28,6 @@ class GameActivity : AppCompatActivity() {
   lateinit var btnCpuBatu: ImageView
   lateinit var btnCpuKertas: ImageView
   
-  private val pemain1 = Player("Pemain 1")
-  private val pemain2 = Player("Pemain 2")
-  
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_game)
@@ -32,6 +35,10 @@ class GameActivity : AppCompatActivity() {
     btnExit = findViewById(R.id.btnExit)
     btnReset = findViewById(R.id.btnReset)
     userName = findViewById(R.id.textView2)
+    lawanName = findViewById(R.id.textView3)
+    
+    val namaUser = intent.getStringExtra("USER_NAME")
+    println("nama user $namaUser")
     
     btnPemainGunting = findViewById(R.id.pemainSatu)
     btnPemainBatu = findViewById(R.id.pemainDua)
@@ -41,16 +48,27 @@ class GameActivity : AppCompatActivity() {
     btnCpuGunting = findViewById(R.id.comDua)
     btnCpuBatu = findViewById(R.id.comTiga)
     
+    btnExit.setOnClickListener {
+      finish()
+    }
+    
+    btnReset.setOnClickListener{
+      clear()
+    }
+    
+    // entering game mode (pemain vs pemain) atau (pemain vs komputer)
     var gameMode = intent.getIntExtra("MODE", 0)
     println("game mode "+gameMode)
     
     if (gameMode == 1){
+      userName.text = namaUser
       btnPemainBatu.setOnClickListener{
       btnPemainGunting.isClickable = false
       btnPemainBatu.isClickable = false
       btnPemainKertas.isClickable = false
       val cpuMove = (1..3).random()
       btnPemainBatu.setBackgroundResource(R.drawable.ic_hand_background)
+        dialogAlert()
       when (cpuMove){
         1 -> {
           LogD("Computer Kertas")
@@ -121,94 +139,183 @@ class GameActivity : AppCompatActivity() {
       }
     }
     else if (gameMode == 2) {
-      setOnClick(btnPemainGunting, 1)
-      setOnClick(btnPemainBatu, 2)
-      setOnClick(btnPemainKertas, 3)
-      
-      setOnClick(btnCpuKertas, 1)
-      setOnClick(btnCpuGunting, 2)
-      setOnClick(btnCpuBatu, 3)
-    }
-    
-    
-  }
+      userName.text = namaUser
+      lawanName.text = "Pemain Dua"
+      btnPemainGunting.setOnClickListener{
+        btnPemainGunting.isClickable = false
+        btnPemainBatu.isClickable = false
+        btnPemainKertas.isClickable = false
+        btnPemainGunting.setBackgroundResource(R.drawable.ic_hand_background)
+        idPemainSatu = 1
+        gameController(selectHandPemainSatu(idPemainSatu))
+      }
+
+      btnPemainBatu.setOnClickListener{
+        btnPemainGunting.isClickable = false
+        btnPemainBatu.isClickable = false
+        btnPemainKertas.isClickable = false
+        btnPemainBatu.setBackgroundResource(R.drawable.ic_hand_background)
+        idPemainSatu = 2
+        gameController(selectHandPemainSatu(idPemainSatu))
+      }
+
+      btnPemainKertas.setOnClickListener{
+        btnPemainGunting.isClickable = false
+        btnPemainBatu.isClickable = false
+        btnPemainKertas.isClickable = false
+        btnPemainKertas.setBackgroundResource(R.drawable.ic_hand_background)
+        idPemainSatu = 3
+        gameController(selectHandPemainSatu(idPemainSatu))
+      }
+
+      btnCpuKertas.setOnClickListener{
+        btnCpuGunting.isClickable = false
+        btnCpuBatu.isClickable = false
+        btnCpuKertas.isClickable = false
+        btnCpuKertas.setBackgroundResource(R.drawable.ic_hand_background)
+        idPemainDua = 1
+        gameController(selectHandPemainDua(idPemainDua))
+      }
+
+      btnCpuGunting.setOnClickListener{
+        btnCpuGunting.isClickable = false
+        btnCpuBatu.isClickable = false
+        btnCpuKertas.isClickable = false
+        btnCpuGunting.setBackgroundResource(R.drawable.ic_hand_background)
+        idPemainDua = 2
+        gameController(selectHandPemainDua(idPemainDua))
+      }
   
-  private fun setOnClick(view: ImageView, idView: Int) {
-    view.setOnClickListener {
-      setPemain1(idView)
-      setPemain2(idView)
-      val handPlayer1 = pemain1.handId
-      val handPlayer2 = pemain2.handId
-      
-      when {
-        handPlayer1 == 1 && handPlayer2 == 1 || handPlayer2 == 1 && handPlayer1 == 1 -> {
-          LogD("Pemain Gunting")
-          LogD("Computer Kertas")
-          LogD("Hasil Pemain Menang !")
-        }
-        handPlayer1 == 1 && handPlayer2 == 2 || handPlayer2 == 2 && handPlayer1 == 1 -> {
-          LogD("Pemain Gunting")
-          LogD("Computer Gunting")
-          LogD("Hasil Draw !")
-        }
-        handPlayer1 == 1 && handPlayer2 == 3 || handPlayer2 == 3 && handPlayer1 == 1 -> {
-          LogD("Pemain Gunting")
-          LogD("Computer Batu")
-          LogD("Hasil Computer Menang !")
-        }
-  
-        handPlayer1 == 2 && handPlayer2 == 1 || handPlayer2 == 1 && handPlayer1 == 2 -> {
-          LogD("Pemain Batu")
-          LogD("Computer Kertas")
-          LogD("Hasil Computer Menang !")
-        }
-        handPlayer1 == 3 && handPlayer2 == 1 || handPlayer2 == 1 && handPlayer1 == 3 -> {
-          LogD("Pemain Kertas")
-          LogD("Computer Kertas")
-          LogD("Hasil Draw !")
-        }
-        
-        
-        else -> {}
+      btnCpuBatu.setOnClickListener{
+        btnCpuGunting.isClickable = false
+        btnCpuBatu.isClickable = false
+        btnCpuKertas.isClickable = false
+        btnCpuBatu.setBackgroundResource(R.drawable.ic_hand_background)
+        idPemainDua = 3
+        gameController(selectHandPemainDua(idPemainDua))
       }
     }
   }
   
-  private fun setPemain1(id: Int): Int {
-    pemain1.handId = id
-    when (pemain1.handId) {
-      1 -> setHand(btnPemainGunting, 1, true)
-      2 -> setHand(btnPemainBatu, 2, true)
-      3 -> setHand(btnPemainKertas, 3, true)
-    }
-    return id
+  private fun clear(){
+    btnPemainGunting.setBackgroundResource(0)
+    btnPemainBatu.setBackgroundResource(0)
+    btnPemainKertas.setBackgroundResource(0)
+    btnCpuGunting.setBackgroundResource(0)
+    btnCpuKertas.setBackgroundResource(0)
+    btnCpuBatu.setBackgroundResource(0)
+  
+    btnPemainGunting.isClickable = true
+    btnPemainBatu.isClickable = true
+    btnPemainKertas.isClickable = true
+    btnCpuGunting.isClickable = true
+    btnCpuKertas.isClickable = true
+    btnCpuBatu.isClickable = true
+  
+    idPemainSatu = 0
+    idPemainDua = 0
   }
   
-  private fun setPemain2(id: Int): Int {
-    pemain2.handId = id
-    when (pemain2.handId) {
-      1 -> setHand(btnCpuBatu, 1, true)
-      2 -> setHand(btnCpuGunting, 2, true)
-      3 -> setHand(btnCpuKertas, 3, true)
-    }
-    return id
+  private fun selectHandPemainSatu(id: Int = 0): Int {
+    val idPemainSatu = id
+    LogD("Pemain $userName Select Hand ID : $idPemainSatu")
+    return idPemainSatu
   }
   
-  private fun setHand(view: ImageView, handId: Int, isSelected: Boolean) {
-    view.setImageResource(setHandImage(handId))
-    when (isSelected) {
-      true -> view.setBackgroundResource(R.drawable.ic_hand_background)
-      false -> view.setBackgroundResource(0)
-    }
+  private fun selectHandPemainDua(id: Int = 0): Int {
+    val idPemainDua = id
+    LogD("Pemain Dua Select Hand ID : $idPemainDua")
+    return idPemainDua
   }
   
-  private fun setHandImage(handImage: Int): Int {
-    return when (handImage) {
-      1 -> R.drawable.ic_gunting
-      2 -> R.drawable.ic_batu
-      3 -> R.drawable.ic_kertas
-      else -> 0
+  private fun gameController(id: Int){
+    val pemainSatu = selectHandPemainSatu(id)
+    val pemainDua = selectHandPemainDua(id)
+    
+    if (pemainSatu != 0 && pemainDua != 0) {
+      when (pemainSatu) {
+        1 -> {
+          when (pemainDua) {
+            1 -> {
+              LogD("Pemain Satu Gunting")
+              LogD("Pemain Dua Kertas")
+              LogD("Hasil Pemain Satu Menang !")
+            }
+            2 -> {
+              LogD("Pemain Satu Gunting")
+              LogD("Pemain Dua Gunting")
+              LogD("Hasil Draw !")
+            }
+            3 -> {
+              LogD("Pemain Satu Gunting")
+              LogD("Pemain Dua Batu")
+              LogD("Hasil Pemain Dua Menang !")
+            }
+          }
+        }
+        2 -> {
+          when (pemainDua) {
+            1 -> {
+              LogD("Pemain $userName Batu")
+              LogD("Pemain Kertas")
+              LogD("Hasil Pemain Dua Menang !")
+            }
+            2 -> {
+              LogD("Pemain $userName Batu")
+              LogD("Pemain Dua Gunting")
+              LogD("Hasil Pemain Satu Menang !")
+            }
+            3 -> {
+              LogD("Pemain $userName Batu")
+              LogD("Pemain Dua Batu")
+              LogD("Hasil Draw !")
+            }
+          }
+        }
+        3 -> {
+          when (pemainDua) {
+            1 -> {
+              LogD("Pemain $userName Kertas")
+              LogD("Pemain Dua Kertas")
+              LogD("Hasil Draw !")
+            }
+            2 -> {
+              LogD("Pemain $userName Kertas")
+              LogD("Pemain Dua Gunting")
+              LogD("Hasil Pemain Dua Menang !")
+            }
+            3 -> {
+              LogD("Pemain $userName Kertas")
+              LogD("Pemain Dua Batu")
+              LogD("Hasil Pemain Satu Menang !")
+            }
+          }
+        }
+      }
     }
+    dialogAlert()
+  }
+  
+  private fun dialogAlert(){
+    val dialogBuilder = AlertDialog.Builder(this)
+    val viewCustom = LayoutInflater.from(this).inflate(R.layout.dialog_winner, null, false)
+    dialogBuilder.setView(viewCustom)
+    val dialog = dialogBuilder.create()
+  
+    val btnRefresh = viewCustom.findViewById<Button>(R.id.btn_refresh)
+    val btnBack = viewCustom.findViewById<Button>(R.id.btn_back)
+  
+    btnRefresh.setOnClickListener{
+      dialog.dismiss()
+      clear()
+    }
+  
+    btnBack.setOnClickListener{
+      dialog.dismiss()
+      finish()
+    }
+  
+    dialog.show()
   }
   
   private fun LogD(message: String){

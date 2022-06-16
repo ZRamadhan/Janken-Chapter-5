@@ -36,12 +36,14 @@ class HomeActivity : AppCompatActivity() {
     btnVsCpu.setOnClickListener{
       val navigateToGame = Intent(this@HomeActivity, GameActivity::class.java)
       navigateToGame.putExtra("MODE", 1)
+      navigateToGame.putExtra("USER_NAME", namaUser)
       startActivity(navigateToGame)
     }
     
     btnVsPemain.setOnClickListener{
       val navigateToGame = Intent(this@HomeActivity, GameActivity::class.java)
       navigateToGame.putExtra("MODE", 2)
+      navigateToGame.putExtra("USER_NAME", namaUser)
       startActivity(navigateToGame)
     }
   }
